@@ -11,6 +11,7 @@ namespace Supreme_TPS
         private string nombre;
         private string contraseña;
         private char nivel;
+        
 
     }
 }
