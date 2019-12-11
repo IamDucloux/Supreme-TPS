@@ -44,9 +44,79 @@ namespace Supreme_TPS
             return resultado;
         }
 
+        public int Consulta_Clave(MySqlConnection con, string nombre)
+        {
+            int resultado = 0;
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT clave FROM Productos WHERE nombre ='" + nombre + "'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                resultado = reader.GetInt32(0);
+            }
+            reader.Close();
+            return resultado;
+        }
+
+        public int Consulta_Descripcion(MySqlConnection con, string clave)
+        {
+            int resultado = 0;
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT Descripcion FROM Productos WHERE clave ='" + clave + "'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                resultado = reader.GetInt32(0);
+            }
+            reader.Close();
+            return resultado;
+        }
+
+        public int Consulta_Nombre(MySqlConnection con, string clave)
+        {
+            int resultado = 0;
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT Nombre FROM Productos WHERE Clave ='" + clave + "'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                resultado = reader.GetInt32(0);
+            }
+            reader.Close();
+            return resultado;
+        }
+
+        public List<Producto> Consulta_Productos(MySqlConnection con, string clave)
+        {
+
+            List<Producto> resultados = new List<Producto>(); //Lista en la que se van a almacenar los resultados del query
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT * FROM Productos WHERE Clave ='" + clave + "'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                //string clv = reader.GetString(0);
+                //string nomb = reader.GetString(1);
+                //string desc = reader.GetString(2);
+                //int exist = reader.GetInt32(3);
+                
+                resultados.Add(new Producto(reader.GetString(0),reader.GetString(1),reader.GetString(2),reader.GetInt32(3)));
+            }
+            reader.Close();
+            return resultados;
+        }
+
         public void Alta_Producto(MySqlConnection con, Producto prodct)
         {
-            string consulta = "INSERT INTO Productos VALUES("+"'"+prodct.GetClave()+"','"+prodct.GetNombre()+"','"+prodct.GetDescripcion()+"'"+")";
+            string consulta = "INSERT INTO Productos VALUES("+"'"+prodct.GetClave()+"','"+prodct.GetNombre()+"','"+prodct.GetDescripcion()+"','"+prodct.GetExistencia()+"')";
             MySqlCommand cmd = new MySqlCommand(consulta, con);
             MessageBox.Show(consulta);
             try
@@ -61,6 +131,8 @@ namespace Supreme_TPS
             }
         }
 
+
+        
         
 
         //Getters & Setters

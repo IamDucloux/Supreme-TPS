@@ -8,6 +8,8 @@ namespace Supreme_TPS
 {
     class Ticket
     {
+        private int serie;
+        
 
     }
 }
