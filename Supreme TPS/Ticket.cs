@@ -8,5 +8,6 @@ namespace Supreme_TPS
 {
     class Ticket
     {
+
     }
 }

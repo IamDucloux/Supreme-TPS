@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MySql.Data.MySqlClient;
 namespace Supreme_TPS
 {
     class Producto
@@ -12,6 +12,7 @@ namespace Supreme_TPS
         private string nombre;
         private string descripcion;
         private int existencia;
+        
 
         public Producto(string clave, string nombre, string descripcion, int existencia)
         {
@@ -26,7 +27,7 @@ namespace Supreme_TPS
 
         }
 
-
+        
 
         //Getters & Setters
 
