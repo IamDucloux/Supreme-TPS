@@ -21,13 +21,13 @@ namespace Supreme_TPS
             this.nivel = nivel;
         }
 
-        public string Consulta_Nombre(MySqlConnection con, string nombre)
+        public static string Consulta_Nombre(MySqlConnection con, string nombre)
         {
             string cadena = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
             
-            cmd.CommandText = "SELECT nombre FROM Usuarios WHERE usuario ='" + nombre + "'";
+            cmd.CommandText = "SELECT nombre FROM Usuarios WHERE nombre ='" + nombre + "'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -38,13 +38,32 @@ namespace Supreme_TPS
             
         }
 
-        public string Consulta_Contraseña(MySqlConnection con, string nombre)
+        public List<Usuario> Consulta_Usuarios(MySqlConnection con, string nombre)
+        {
+
+            List<Usuario> resultados = new List<Usuario>(); //Lista en la que se van a almacenar los resultados del query
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT * FROM Usuarios WHERE nombre like'%" + nombre + "%'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                
+
+                resultados.Add(new Usuario(reader.GetString(0),reader.GetString(1),reader.GetChar(2)));
+            }
+            reader.Close();
+            return resultados;
+        }
+
+        public static string Consulta_Contraseña(MySqlConnection con, string nombre)
         {
             string cadena = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "SELECT contraseña FROM Usuarios WHERE usuario ='" + nombre + "'";
+            cmd.CommandText = "SELECT contraseña FROM Usuarios WHERE nombre ='" + nombre + "'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -61,7 +80,7 @@ namespace Supreme_TPS
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "SELECT nivel FROM Usuarios WHERE usuario ='" + nombre + "'";
+            cmd.CommandText = "SELECT nivel FROM Usuarios WHERE nombre ='" + nombre + "'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {

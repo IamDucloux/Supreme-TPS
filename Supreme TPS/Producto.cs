@@ -28,9 +28,9 @@ namespace Supreme_TPS
 
         }
 
-        public int Consulta_Existencia(MySqlConnection con, string clave)
+        public string Consulta_Existencia(MySqlConnection con, string clave)
         {
-            int resultado = 0;
+            string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
@@ -38,15 +38,15 @@ namespace Supreme_TPS
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                resultado = reader.GetInt32(0);
+                resultado = reader.GetString(0);
             }
             reader.Close();
             return resultado;
         }
 
-        public int Consulta_Clave(MySqlConnection con, string nombre)
+        public string Consulta_Clave(MySqlConnection con, string nombre)
         {
-            int resultado = 0;
+            string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
@@ -54,15 +54,15 @@ namespace Supreme_TPS
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                resultado = reader.GetInt32(0);
+                resultado = reader.GetString(0);
             }
             reader.Close();
             return resultado;
         }
 
-        public int Consulta_Descripcion(MySqlConnection con, string clave)
+        public string Consulta_Descripcion(MySqlConnection con, string clave)
         {
-            int resultado = 0;
+            string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
@@ -70,15 +70,15 @@ namespace Supreme_TPS
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                resultado = reader.GetInt32(0);
+                resultado = reader.GetString(0);
             }
             reader.Close();
             return resultado;
         }
 
-        public int Consulta_Nombre(MySqlConnection con, string clave)
+        public string Consulta_Nombre(MySqlConnection con, string clave)
         {
-            int resultado = 0;
+            string resultado =  null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
@@ -86,7 +86,7 @@ namespace Supreme_TPS
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                resultado = reader.GetInt32(0);
+                resultado = reader.GetString(0);
             }
             reader.Close();
             return resultado;
@@ -99,7 +99,7 @@ namespace Supreme_TPS
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "SELECT * FROM Productos WHERE Clave ='" + clave + "'";
+            cmd.CommandText = "SELECT * FROM Productos WHERE Clave like'%" + clave + "%'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
