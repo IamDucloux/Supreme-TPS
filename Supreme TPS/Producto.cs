@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 namespace Supreme_TPS
 {
@@ -25,6 +26,39 @@ namespace Supreme_TPS
         public Producto()
         {
 
+        }
+
+        public int Consulta_Existencia(MySqlConnection con, string clave)
+        {
+            int resultado = 0;
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = con;
+
+            cmd.CommandText = "SELECT existencia FROM Productos WHERE Clave ='" + clave + "'";
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                resultado = reader.GetInt32(0);
+            }
+            reader.Close();
+            return resultado;
+        }
+
+        public void Alta_Producto(MySqlConnection con, Producto prodct)
+        {
+            string consulta = "INSERT INTO Productos VALUES("+"'"+prodct.GetClave()+"','"+prodct.GetNombre()+"','"+prodct.GetDescripcion()+"'"+")";
+            MySqlCommand cmd = new MySqlCommand(consulta, con);
+            MessageBox.Show(consulta);
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+
+            }
         }
 
         
