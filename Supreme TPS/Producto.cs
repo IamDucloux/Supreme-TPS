@@ -28,7 +28,7 @@ namespace Supreme_TPS
 
         }
 
-        public string Consulta_Existencia(MySqlConnection con, string clave)
+        public static string Consulta_Existencia(MySqlConnection con, string clave)
         {
             string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
@@ -44,13 +44,13 @@ namespace Supreme_TPS
             return resultado;
         }
 
-        public string Consulta_Clave(MySqlConnection con, string nombre)
+        public static string Consulta_Clave(MySqlConnection con, string clave)
         {
             string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "SELECT clave FROM Productos WHERE nombre ='" + nombre + "'";
+            cmd.CommandText = "SELECT clave FROM Productos WHERE clave ='" + clave + "'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -60,7 +60,7 @@ namespace Supreme_TPS
             return resultado;
         }
 
-        public string Consulta_Descripcion(MySqlConnection con, string clave)
+        public static string Consulta_Descripcion(MySqlConnection con, string clave)
         {
             string resultado = null;
             MySqlCommand cmd = new MySqlCommand();
@@ -76,7 +76,7 @@ namespace Supreme_TPS
             return resultado;
         }
 
-        public string Consulta_Nombre(MySqlConnection con, string clave)
+        public static string Consulta_Nombre(MySqlConnection con, string clave)
         {
             string resultado =  null;
             MySqlCommand cmd = new MySqlCommand();
@@ -110,10 +110,7 @@ namespace Supreme_TPS
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                //string clv = reader.GetString(0);
-                //string nomb = reader.GetString(1);
-                //string desc = reader.GetString(2);
-                //int exist = reader.GetInt32(3);
+                
                 
                 resultados.Add(new Producto(reader.GetString(0),reader.GetString(1),reader.GetString(2),reader.GetInt32(3)));
             }
@@ -121,9 +118,27 @@ namespace Supreme_TPS
             return resultados;
         }
 
-        public void Alta_Producto(MySqlConnection con, Producto prodct)
+        public static void Alta_Producto(MySqlConnection con, Producto prodct)
         {
             string consulta = "INSERT INTO Productos VALUES("+"'"+prodct.GetClave()+"','"+prodct.GetNombre()+"','"+prodct.GetDescripcion()+"','"+prodct.GetExistencia()+"')";
+            MySqlCommand cmd = new MySqlCommand(consulta, con);
+            MessageBox.Show(consulta);
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+
+            }
+        }
+
+        public static void Edita_Producto(MySqlConnection con, Producto prod,string clave)
+        {
+            string consulta = "UPDATE Productos SET(Clave='"+prod.GetClave()+"',Nombre='"+prod.GetNombre()+
+                "',Descripcion='"+prod.GetDescripcion()+"') WHERE Clave='"+clave+"'"; 
             MySqlCommand cmd = new MySqlCommand(consulta, con);
             MessageBox.Show(consulta);
             try

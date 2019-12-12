@@ -13,7 +13,7 @@ namespace Supreme_TPS
 {
     public partial class Form1 : Form
     {
-        UserForm usrform = new UserForm();
+        static UserForm usrform = new UserForm();
         
         public Form1()
         {
