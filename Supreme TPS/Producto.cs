@@ -92,14 +92,21 @@ namespace Supreme_TPS
             return resultado;
         }
 
-        public List<Producto> Consulta_Productos(MySqlConnection con, string clave)
+        public override string ToString()
+        {
+            string retorno = null;
+            retorno = "Clave:   " + GetClave() + " Nombre:      " + GetNombre() + " Descripcion:    " + GetDescripcion() + " Existencia:    " + GetExistencia().ToString();
+            return retorno;
+        }
+
+        public static List<Producto> Consulta_Productos(MySqlConnection con, string clave)
         {
 
             List<Producto> resultados = new List<Producto>(); //Lista en la que se van a almacenar los resultados del query
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = con;
 
-            cmd.CommandText = "SELECT * FROM Productos WHERE Clave like'%" + clave + "%'";
+            cmd.CommandText = "SELECT * FROM Productos WHERE Clave like '%" + clave + "%'";
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
