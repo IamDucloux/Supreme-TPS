@@ -261,5 +261,10 @@ namespace Supreme_TPS
             Close();
             inicio.Show();
         }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
