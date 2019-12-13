@@ -135,6 +135,23 @@ namespace Supreme_TPS
             }
         }
 
+        public static void Baja_Producto(MySqlConnection con, string clave_prod)
+        {
+            string consulta = "DELETE Productos WHERE Clave='" + clave_prod + "'";
+            MySqlCommand cmd = new MySqlCommand(consulta, con);
+            MessageBox.Show(consulta);
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+
+            }
+        }
+
         public static void Edita_Producto(MySqlConnection con, Producto prod,string clave)
         {
             string consulta = "UPDATE Productos SET(Clave='"+prod.GetClave()+"',Nombre='"+prod.GetNombre()+
@@ -153,7 +170,47 @@ namespace Supreme_TPS
             }
         }
 
+        public static void Agrega_Movimiento(MySqlConnection con, string clave_prod, string concepto, int cantidad)
+        {
+            
+            
+            if (concepto=="Entrada")
+            {
+                string consulta = "UPDATE Productos SET(Existencia=(Existencia+"+"'"+cantidad+"') WHERE Clave='"+clave_prod+"'";
+                MySqlCommand cmd = new MySqlCommand(consulta, con);
+                MessageBox.Show(consulta);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
 
+                    MessageBox.Show(ex.ToString());
+
+                }
+            }
+            else
+            {
+                string consulta = "UPDATE Productos SET(Existencia=(Existencia-" + "'" + cantidad + "') WHERE Clave='" + clave_prod + "'";
+                MySqlCommand cmd = new MySqlCommand(consulta, con);
+                MessageBox.Show(consulta);
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.ToString());
+
+                }
+            }
+
+            
+            
+
+        }
         
         
 
